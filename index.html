@@ -15,20 +15,26 @@
       vr-mode-ui="enabled: false" 
       device-orientation-permission-ui="enabled: false">
 
-      <a-assets>
-        <img id="via_pratello" src="https://cdn.glitch.global/9f04977a-e4e3-400a-b333-8f1e68ac8cf9/via_pratello.png?v=1741110757377" />
-      </a-assets>
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="rayOrigin: mouse"></a-camera>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
+      <!-- Marker target -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-image src="#via_pratello" position="0 0 0" width="1" height="0.552" rotation="0 0 0" scale="1.5 1.9 3"></a-image>
+        <a-entity id="pieces"></a-entity>
+        <a-entity id="center"></a-entity>
+
+        <a-text id="centerText" 
+                value="Drag here" 
+                align="center" 
+                color="#FFFFFF"
+                position="0 0.5 0" 
+                scale="1.2 1.2 1.2"
+                width="2"
+                font="mozillavr">
+        </a-text>
       </a-entity>
       
     </a-scene>
+
+    <script src="js/main.js"></script>
   </body>
 </html>
-
-
-
-
