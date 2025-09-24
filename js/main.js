@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     piece.setAttribute('position', {x, y, z: zFixed});
     piece.setAttribute('scale', {x:pezzoScale, y:pezzoScale, z:pezzoScale});
     piece.dataset.locked = "false";
-    piece.setAttribute('data-raycastable', 'true'); // aggiunto per raycaster
+    piece.setAttribute('data-raycastable', 'true');
 
     piece.addEventListener('model-loaded', () => console.log('Caricato', models[i]));
 
@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     pieces.push(piece);
   }
 
-  // Aggiorna posizione mouse/touch
   function updateMouse(event){
     if(event.touches){
       mouse.x = (event.touches[0].clientX / window.innerWidth)*2-1;
@@ -84,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     selectedPiece.setAttribute('position', newPos);
 
-    // evidenziazione snap
     const distanzaCentro = Math.sqrt((newPos.x - centerPos.x)**2 + (newPos.y - centerPos.y)**2);
     const scale = (distanzaCentro < raggioSnap) ? pezzoScale*1.2 : pezzoScale;
     selectedPiece.setAttribute('scale', {x:scale, y:scale, z:scale});
@@ -119,9 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       if(pieces.every(p=>p.dataset.locked==="true")){
-        // rimuove pezzi originali
         pieces.forEach(p => { if(p.parentNode) p.parentNode.removeChild(p); });
-        // mostra modello finale
         const finalShape = document.createElement('a-entity');
         finalShape.setAttribute('gltf-model','./models/piece_final.glb');
         finalShape.setAttribute('position',{...centerPos});
