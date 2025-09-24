@@ -24,7 +24,8 @@
   <button id="startBtn">Start AR</button>
 
   <!-- Video invisibile per MindAR -->
-  <video id="cameraVideo" autoplay muted playsinline style="display:none;"></video>
+  <video id="cameraVideo" autoplay muted playsinline
+         style="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;"></video>
 
   <a-scene
     mindar-image="imageTargetSrc: ./targets/target.json; maxTrack:1"
@@ -66,7 +67,7 @@
 
     startBtn.addEventListener('click', async () => {
       try {
-        // Avvia MindAR e la camera
+        // Avvia MindAR e la camera dopo l'interazione utente
         await scene.components['mindar-image'].start();
         startBtn.style.display = 'none';
       } catch(e) {
