@@ -7,22 +7,23 @@
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-
   <!-- MindAR per A-Frame -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    html, body {
-      margin:0; padding:0;
-      width:100%; height:100%;
-      overflow:hidden;
-      background: black;
+    html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:black; }
+    #startBtn {
+      position: fixed; top: 10px; left: 10px; z-index: 10;
+      padding: 10px 20px; font-size: 16px;
     }
   </style>
 </head>
 <body>
+
+  <button id="startBtn">Start AR</button>
+
   <a-scene
-    mindar-image="imageTargetSrc: targets/target.mind;"
+    mindar-image="imageTargetSrc: ./targets/target.json; maxTrack: 1"
     embedded
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights; alpha: true; antialias: true"
@@ -32,7 +33,7 @@
     <!-- Camera gestita da MindAR -->
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="rayOrigin: mouse"></a-camera>
 
-    <!-- Contenuto ancorato al target (index 0 del file target.mind) -->
+    <!-- Contenuto ancorato al target -->
     <a-entity mindar-image-target="targetIndex: 0">
 
       <a-entity id="pieces"></a-entity>
@@ -48,11 +49,27 @@
               width="2"
               font="mozillavr">
       </a-text>
+
     </a-entity>
   </a-scene>
 
   <!-- Script logica puzzle -->
   <script src="js/main_test.js"></script>
+
+  <!-- Pulsante Start AR -->
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const scene = document.querySelector('a-scene');
+
+    startBtn.addEventListener('click', async () => {
+      try {
+        await scene.components['mindar-image'].start();
+        startBtn.style.display = 'none';
+      } catch(e) {
+        console.error('Errore avvio AR:', e);
+      }
+    });
+  </script>
 </body>
 </html>
 
