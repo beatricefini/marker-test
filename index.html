@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Puzzle Merge VR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+  <!-- MindAR per A-Frame -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    html, body {
+      margin:0; padding:0;
+      width:100%; height:100%;
+      overflow:hidden;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <a-scene
+    mindar-image="imageTargetSrc: targets/target.mind;"
+    embedded
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights; alpha: true; antialias: true"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true">
+
+    <!-- Camera gestita da MindAR -->
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="rayOrigin: mouse"></a-camera>
+
+    <!-- Contenuto ancorato al target (index 0 del file target.mind) -->
+    <a-entity mindar-image-target="targetIndex: 0">
+
+      <a-entity id="pieces"></a-entity>
+      <a-entity id="center"></a-entity>
+
+      <!-- Testo guida al centro del target -->
+      <a-text id="centerText" 
+              value="Drag here" 
+              align="center" 
+              color="#FFFFFF"
+              position="0 0.5 0" 
+              scale="1.2 1.2 1.2"
+              width="2"
+              font="mozillavr">
+      </a-text>
+    </a-entity>
+  </a-scene>
+
+  <!-- Script logica puzzle -->
+  <script src="js/main_test.js"></script>
+</body>
+</html>
+
