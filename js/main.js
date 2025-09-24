@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // I pezzi sono figli del target MindAR
   const container = document.querySelector('[mindar-image-target] #pieces');
   const camera = document.querySelector('a-camera');
   const center = document.getElementById('center');
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     pieces.push(piece);
   }
 
-  // Aggiorna mouse/touch
   function updateMouse(event){
     if(event.touches){
       mouse.x = (event.touches[0].clientX / window.innerWidth)*2-1;
@@ -85,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     selectedPiece.setAttribute('position', newPos);
 
-    // Evidenziazione snap
     const distanzaCentro = Math.sqrt((newPos.x - centerPos.x)**2 + (newPos.y - centerPos.y)**2);
     const scale = (distanzaCentro < raggioSnap) ? pezzoScale*1.2 : pezzoScale;
     selectedPiece.setAttribute('scale', {x:scale, y:scale, z:scale});
@@ -98,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const distanzaCentro = Math.sqrt((pos.x - centerPos.x)**2 + (pos.y - centerPos.y)**2);
 
     if(distanzaCentro < raggioSnap){
-      // Snap al centro
       selectedPiece.setAttribute('animation__move', {
         property: 'position',
         to: `${centerPos.x} ${centerPos.y} ${centerPos.z}`,
@@ -121,15 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       if(pieces.every(p=>p.dataset.locked==="true")){
-        // Rimuovi pezzi originali
         pieces.forEach(p => { if(p.parentNode) p.parentNode.removeChild(p); });
-        // Mostra modello finale
         const finalShape = document.createElement('a-entity');
         finalShape.setAttribute('gltf-model','./models/piece_final.glb');
         finalShape.setAttribute('position',{...centerPos});
         finalShape.setAttribute('scale',{x:0.5, y:0.5, z:0.5});
         center.appendChild(finalShape);
-        // Animazione fluttuante
         finalShape.setAttribute('animation__float', {
           property:'position',
           dir:'alternate',
@@ -142,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },600);
   }
 
-  // Eventi
   window.addEventListener('mousedown', onPointerDown);
   window.addEventListener('mousemove', onPointerMove);
   window.addEventListener('mouseup', onPointerUp);
@@ -150,3 +142,4 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('touchmove', onPointerMove, {passive:false});
   window.addEventListener('touchend', onPointerUp);
 });
+
